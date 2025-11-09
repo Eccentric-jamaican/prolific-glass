@@ -54,7 +54,7 @@ export function Products({ className }: { className?: string }) {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.55 }}
-          className="flex flex-col items-center gap-6 text-center sm:flex-row sm:items-start sm:text-left lg:items-end lg:justify-between"
+          className="transform-gpu will-change-transform flex flex-col items-center gap-6 text-center sm:flex-row sm:items-start sm:text-left lg:items-end lg:justify-between"
         >
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-stretch sm:gap-4">
             <span className="hidden w-1 rounded-full bg-sky-400 sm:block" aria-hidden />
@@ -78,7 +78,7 @@ export function Products({ className }: { className?: string }) {
           variants={staggerContainer({ delay: 0.2, stagger: 0.12 })}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, amount: 0.25, margin: "-15% 0px" }}
+          viewport={{ once: true, amount: 0.3 }}
         >
           <div className="relative">
             <div
@@ -92,7 +92,7 @@ export function Products({ className }: { className?: string }) {
             <motion.div
               variants={trackPreset}
               data-lenis-prevent
-              className="flex snap-x snap-mandatory snap-always gap-5 overflow-x-auto pb-4 pr-4 pl-1 scrollbar-hide touch-pan-x overscroll-x-contain sm:gap-6 sm:pl-2"
+              className="transform-gpu will-change-transform flex snap-x snap-mandatory snap-always gap-5 overflow-x-auto pb-4 pr-4 pl-1 scrollbar-hide touch-pan-x overscroll-x-contain sm:gap-6 sm:pl-2"
             >
               {products.map((product, index) => (
                 <ProductCard key={product.name} product={product} index={index} />
@@ -119,7 +119,7 @@ function ProductCard({ product, index }: ProductCardProps) {
     <motion.article
       variants={cardPreset}
       tabIndex={0}
-      className="group relative flex w-[220px] shrink-0 snap-center flex-col justify-between rounded-3xl border border-white/20 bg-white/12 px-6 py-7 text-left text-white shadow-[0_30px_70px_-40px_rgba(56,189,248,0.55),inset_1px_1px_2px_rgba(255,255,255,0.32),inset_-1px_-2px_4px_rgba(15,23,42,0.28)] backdrop-blur-[18px] transition-transform duration-300 hover:-translate-y-1 hover:border-sky-400/50 hover:shadow-[0_40px_90px_-55px_rgba(56,189,248,0.65),inset_1px_1px_3px_rgba(255,255,255,0.4),inset_-1px_-3px_6px_rgba(15,23,42,0.32)] focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:w-[240px] lg:w-[260px]"
+      className="transform-gpu will-change-transform group relative flex w-[220px] shrink-0 snap-center flex-col justify-between rounded-3xl border border-white/20 bg-white/12 px-6 py-7 text-left text-white shadow-[0_30px_70px_-40px_rgba(56,189,248,0.55),inset_1px_1px_2px_rgba(255,255,255,0.32),inset_-1px_-2px_4px_rgba(15,23,42,0.28)] backdrop-blur-[18px] transition-transform duration-300 hover:-translate-y-1 hover:border-sky-400/50 hover:shadow-[0_40px_90px_-55px_rgba(56,189,248,0.65),inset_1px_1px_3px_rgba(255,255,255,0.4),inset_-1px_-3px_6px_rgba(15,23,42,0.32)] focus-visible:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 sm:w-[240px] lg:w-[260px]"
     >
       <span className="text-4xl font-black text-sky-300/90 drop-shadow-sm sm:text-[2.75rem]">
         {String(index + 1).padStart(2, "0")}

@@ -70,10 +70,10 @@ export function Testimonials({ className }: { className?: string }) {
         </motion.div>
 
         <motion.div
-          variants={staggerContainer({ delay: 0.12, stagger: 0.1 })}
+          variants={staggerContainer({ delay: 0.08, stagger: 0.08 })}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: false, margin: "-20% 0px" }}
+          viewport={{ once: true, amount: 0.35 }}
           className="grid gap-6 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4 lg:auto-rows-[minmax(220px,1fr)] lg:gap-8"
         >
           {testimonials.map((testimonial, index) => (
@@ -124,7 +124,7 @@ function TestimonialCard({ quote, name, role, layout, index }: TestimonialCardPr
     <motion.article
       variants={cardVariant}
       className={cn(
-        "flex h-full flex-col justify-between rounded-3xl border border-white/25 bg-white/15 p-5 text-slate-900 shadow-[0_25px_60px_-35px_rgba(15,23,42,0.35),inset_1px_1px_2px_rgba(255,255,255,0.32),inset_-1px_-1px_3px_rgba(15,23,42,0.18)] backdrop-blur-xl transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_40px_90px_-50px_rgba(15,23,42,0.45),inset_1px_1px_3px_rgba(255,255,255,0.4),inset_-1px_-2px_4px_rgba(15,23,42,0.24)] sm:p-6",
+        "transform-gpu will-change-transform flex h-full flex-col justify-between rounded-3xl border border-white/25 bg-white/15 p-5 text-slate-900 shadow-[0_25px_60px_-35px_rgba(15,23,42,0.35),inset_1px_1px_2px_rgba(255,255,255,0.32),inset_-1px_-1px_3px_rgba(15,23,42,0.18)] backdrop-blur-xl transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_40px_90px_-50px_rgba(15,23,42,0.45),inset_1px_1px_3px_rgba(255,255,255,0.4),inset_-1px_-2px_4px_rgba(15,23,42,0.24)] sm:p-6",
         layout
       )}
     >
