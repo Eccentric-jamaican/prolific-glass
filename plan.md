@@ -67,6 +67,13 @@
 - Horizontal scrolling tracks pair `snap-x` with `.scrollbar-hide` utility to keep UI clean.
 - Accent headings use shared vertical bar + uppercase stack for brand cohesion; reuse structure from `features.tsx` and `products.tsx`.
 
+### Mobile Thumb-Friendly Scrolling (Nov 9, 2025)
+- Research recap (Smashing Magazine, “The Thumb Zone”): prioritize controls within the easy reach zone (center-bottom) and treat top corners as “stretch” for rarely used items.
+- Spacing & sizing: keep vertical rhythm generous (56–72px between major touch targets) and ensure tappable areas ≥48px; swipe zones should be ≥45px tall to prevent accidental triggers.
+- Navigation: consider sticky or bottom sheets for high-frequency actions, and reserve overlays/drawers for secondary menus so thumbs stay relaxed.
+- Gestures: allow swipes to begin anywhere inside cards, avoid edge-only interactions, and align gesture targets diagonally toward the natural downward swipe path.
+- Implementation notes: audit hero + CTA stack on mobile, lower key buttons if they sit above the comfortable zone, and test with real devices after Lenis adjustments to confirm inertia feels natural for thumb-driven scrolls.
+
 ## Sticky Scroll Notes (Nov 8, 2025)
 - Sticky scroll requires the pinned column to avoid transforms; wrap animated content inside while the sticky container remains static.
 - Lenis reference keeps the sticky column at viewport center by giving the sticky element full viewport height and centering contents via flex.

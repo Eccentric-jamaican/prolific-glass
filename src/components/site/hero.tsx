@@ -42,7 +42,7 @@ export function Hero({ className }: { className?: string }) {
       )}
     >
       <div className="absolute inset-0 z-0 flex items-center justify-center">
-        <div className="relative w-full max-w-[1920px] aspect-video">
+        <div className="relative h-full w-full sm:max-w-[1920px] sm:aspect-video">
           <Image
             src="/hero-1.png"
             alt="Glass shards abstract background"

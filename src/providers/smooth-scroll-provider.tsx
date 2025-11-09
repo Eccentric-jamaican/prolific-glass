@@ -15,13 +15,13 @@ export type SmoothScrollContextValue = {
 
 const SmoothScrollContext = createContext<SmoothScrollContextValue | undefined>(undefined)
 
-const LENIS_OPTIONS: LenisOptions = {
+const DEFAULT_LENIS_OPTIONS: LenisOptions = {
   smoothWheel: true,
   syncTouch: true,
-  touchMultiplier: 1.15,
-  touchInertiaMultiplier: 1.15,
-  duration: 1.2,
-  easing: (t) => 1 - Math.pow(1 - t, 3),
+  touchMultiplier: 1,
+  touchInertiaMultiplier: 25,
+  duration: 0.75,
+  easing: (t) => 1 - Math.pow(1 - t, 2.4),
   gestureOrientation: "vertical",
   orientation: "vertical",
   wheelMultiplier: 1,
@@ -33,6 +33,7 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   const frameRef = useRef<number | null>(null)
   const [isReady, setIsReady] = useState(false)
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false)
+  const [hasCoarsePointer, setHasCoarsePointer] = useState(false)
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
@@ -58,6 +59,46 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
   }, [])
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia("(pointer: coarse)")
+    const handleChange = (event: MediaQueryListEvent | MediaQueryList) => {
+      setHasCoarsePointer(event.matches)
+    }
+
+    handleChange(mediaQuery)
+
+    if (typeof mediaQuery.addEventListener === "function") {
+      mediaQuery.addEventListener("change", handleChange as EventListener)
+    } else {
+      mediaQuery.addListener(handleChange as (this: MediaQueryList, ev: MediaQueryListEvent) => void)
+    }
+
+    return () => {
+      if (typeof mediaQuery.removeEventListener === "function") {
+        mediaQuery.removeEventListener("change", handleChange as EventListener)
+      } else {
+        mediaQuery.removeListener(handleChange as (this: MediaQueryList, ev: MediaQueryListEvent) => void)
+      }
+    }
+  }, [])
+
+  const lenisOptions = useMemo<LenisOptions>(() => {
+    if (!hasCoarsePointer) {
+      return DEFAULT_LENIS_OPTIONS
+    }
+
+    return {
+      ...DEFAULT_LENIS_OPTIONS,
+      touchMultiplier: 0.9,
+      touchInertiaMultiplier: 12,
+      duration: 0.55,
+      easing: (t) => 1 - Math.pow(1 - t, 1.9),
+      lerp: 0.14,
+      syncTouch: true,
+      syncTouchLerp: 0.12,
+    }
+  }, [hasCoarsePointer])
+
+  useEffect(() => {
     if (prefersReducedMotion) {
       if (lenisRef.current) {
         lenisRef.current.destroy()
@@ -71,7 +112,7 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
       return
     }
 
-    const lenis = new Lenis(LENIS_OPTIONS)
+    const lenis = new Lenis(lenisOptions)
     lenisRef.current = lenis
     setIsReady(true)
 
@@ -90,7 +131,7 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
       lenisRef.current = null
       frameRef.current = null
     }
-  }, [prefersReducedMotion])
+  }, [prefersReducedMotion, lenisOptions])
 
   const contextValue = useMemo<SmoothScrollContextValue>(() => ({
     lenis: lenisRef.current,
