@@ -79,3 +79,38 @@
 - Lenis reference keeps the sticky column at viewport center by giving the sticky element full viewport height and centering contents via flex.
 - Our implementation mirrors this: `aside` is `lg:sticky lg:top-0` with `min-h-screen` flex wrapper so the copy locks mid-viewport while cards scroll.
 - For QA, need to validate via Playwright once additional MCP actions are available.
+
+## Animation Jitter Stabilization (Nov 9, 2025)
+
+### Summary
+- Addressed jitter/stutter during fast scroll by stabilizing in-view triggers, promoting animated layers to GPU, and retuning scroll-driven springs.
+- Kept native inertia for horizontal/vertical swipe zones by opting out of Lenis where appropriate.
+
+### Lenis tuning
+- Default (desktop): `lerp: 0.16`, `wheelMultiplier: 0.92`, `touchInertiaMultiplier: 1.12`, `syncTouchLerp: 0.08`.
+- Coarse pointer (mobile/tablet): `syncTouch: false`, `lerp: 0.3`, `touchMultiplier: 1.2`, `touchInertiaMultiplier: 1`, softened easing.
+- Files: `src/providers/smooth-scroll-provider.tsx`.
+
+### Section changes
+- Products (`src/components/site/products.tsx`)
+  - In‑view: `viewport={{ once: true, amount: 0.3 }}` (removed negative margin thrash).
+  - Track: `data-lenis-prevent` + `touch-pan-x overscroll-x-contain` and `transform-gpu will-change-transform`.
+  - Cards: added `transform-gpu will-change-transform` on `motion.article`.
+- Features (`src/components/site/features.tsx`)
+  - Section: `data-lenis-prevent` + `touch-pan-y overscroll-y-contain`.
+  - Promoted animated wrappers (`heading`, `cta`) and cards (`motion.li`) with `transform-gpu will-change-transform`.
+  - Retuned scroll springs: translateY (stiffness 200, damping 38, mass 0.7) and opacity (stiffness 180, damping 36, mass 0.65).
+- Testimonials (`src/components/site/testimonials.tsx`)
+  - In‑view: `viewport={{ once: true, amount: 0.35 }}`, reduced stagger (`delay: 0.08, stagger: 0.08`).
+  - Cards: added `transform-gpu will-change-transform`.
+- Footer (`src/components/site/footer.tsx`)
+  - Promoted animated wrappers to GPU layers with `transform-gpu will-change-transform`.
+
+### QA checklist
+- Mobile & desktop: rapid flick through sections, verify no replayed entrances or visible stutter.
+- Chrome DevTools: Performance record with 4× CPU throttle; confirm <1–2 dropped frames on fast scroll.
+- Elements panel: ensure animated nodes show their own layers (compositing border on).
+
+### Notes / next steps
+- If any section still jitters, move heavy effects (backdrop blur/large shadows) to non‑moving children and keep the translating node to `transform/opacity` only.
+- For complex nested scroll areas, prefer `useInView` with explicit `root` and stable `amount` over aggressive negative `margin`.

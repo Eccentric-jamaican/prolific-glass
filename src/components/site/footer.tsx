@@ -37,7 +37,7 @@ export function Footer({ className }: { className?: string }) {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.5 }}
-          className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between"
+          className="transform-gpu will-change-transform flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between"
         >
           <div>
             <span className="text-xs font-semibold uppercase tracking-[0.35em] text-sky-400">Trusted installs</span>
@@ -61,7 +61,7 @@ export function Footer({ className }: { className?: string }) {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.4 }}
-            className="space-y-6"
+            className="transform-gpu will-change-transform space-y-6"
           >
             <div className="flex items-center gap-3">
               <span className="flex h-10 w-10 items-center justify-center rounded-full border border-sky-500/60 text-lg font-semibold text-sky-400">
@@ -76,7 +76,7 @@ export function Footer({ className }: { className?: string }) {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.4 }}
-              className="inline-flex items-center gap-2 rounded-full border border-sky-500/50 bg-sky-500/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.32em] text-sky-200"
+              className="transform-gpu will-change-transform inline-flex items-center gap-2 rounded-full border border-sky-500/50 bg-sky-500/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.32em] text-sky-200"
             >
               <span className="h-1.5 w-1.5 rounded-full bg-sky-400" aria-hidden />
               Same-day windshield replacement across Jamaica
@@ -88,7 +88,7 @@ export function Footer({ className }: { className?: string }) {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.4 }}
-            className="space-y-4"
+            className="transform-gpu will-change-transform space-y-4"
           >
             <h3 className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">Map</h3>
             <ul className="space-y-3 text-sm text-slate-200">
@@ -107,7 +107,7 @@ export function Footer({ className }: { className?: string }) {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.4 }}
-            className="space-y-4"
+            className="transform-gpu will-change-transform space-y-4"
           >
             <h3 className="text-sm font-semibold uppercase tracking-[0.24em] text-slate-400">Contact</h3>
             <ul className="space-y-3 text-sm text-slate-200">
@@ -126,7 +126,7 @@ export function Footer({ className }: { className?: string }) {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
-          className="mt-16 flex flex-col gap-4 border-t border-white/10 pt-8 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between"
+          className="transform-gpu will-change-transform mt-16 flex flex-col gap-4 border-t border-white/10 pt-8 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between"
         >
           <p>© {year} Prolific Glass Limited. All rights reserved.</p>
           <div className="flex gap-6">

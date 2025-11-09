@@ -60,8 +60,8 @@ export function Features({ className }: { className?: string }) {
               variants={headingPreset}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, amount: 0.6 }}
-              className="flex flex-col items-center gap-4 text-center sm:flex-row sm:items-stretch sm:gap-6 sm:text-left"
+              viewport={{ once: true, amount: 0.35 }}
+              className="transform-gpu will-change-transform flex flex-col items-center gap-4 text-center sm:flex-row sm:items-stretch sm:gap-6 sm:text-left"
             >
               <span className="hidden w-1 rounded-full bg-sky-400 sm:block" aria-hidden />
               <h2
@@ -77,8 +77,8 @@ export function Features({ className }: { className?: string }) {
               variants={ctaPreset}
               initial="hidden"
               whileInView="show"
-              viewport={{ once: true, amount: 0.4 }}
-              className="mt-8 flex flex-col gap-3 sm:flex-row"
+              viewport={{ once: true, amount: 0.3 }}
+              className="transform-gpu will-change-transform mt-8 flex flex-col gap-3 sm:flex-row"
             >
               <Button
                 size="lg"
@@ -113,18 +113,18 @@ function FeatureCard({ feature, index }: { feature: FeatureItem; index: number }
   const ref = useRef<HTMLLIElement>(null)
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 85%", "end 35%"],
+    offset: ["start 95%", "end 30%"],
   })
 
-  const translateY = useSpring(useTransform(scrollYProgress, [0, 1], [120, 0]), {
-    stiffness: 160,
-    damping: 26,
-    mass: 0.85,
+  const translateY = useSpring(useTransform(scrollYProgress, [0, 1], [100, 0]), {
+    stiffness: 200,
+    damping: 38,
+    mass: 0.7,
   })
   const opacity = useSpring(useTransform(scrollYProgress, [0, 0.5], [0.2, 1]), {
-    stiffness: 120,
-    damping: 22,
-    mass: 0.8,
+    stiffness: 180,
+    damping: 36,
+    mass: 0.65,
   })
   const borderOpacity = useTransform(scrollYProgress, [0, 1], [0.15, 1])
 
@@ -132,7 +132,7 @@ function FeatureCard({ feature, index }: { feature: FeatureItem; index: number }
     <motion.li
       ref={ref}
       style={{ y: translateY, opacity }}
-      className="relative min-h-[55vh] rounded-3xl border border-white/20 bg-white/10 p-6 text-white shadow-[0_25px_60px_-35px_rgba(8,145,178,0.45),inset_1px_1px_2px_rgba(255,255,255,0.3),inset_-1px_-1px_3px_rgba(15,23,42,0.22)] backdrop-blur-[18px] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_35px_80px_-45px_rgba(8,145,178,0.55),inset_1px_1px_3px_rgba(255,255,255,0.38),inset_-1px_-2px_4px_rgba(15,23,42,0.28)] sm:p-8 lg:min-h-[70vh] lg:p-10"
+      className="transform-gpu will-change-transform contain-[paint] relative min-h-[55vh] rounded-3xl border border-white/20 bg-white/10 p-6 text-white shadow-[0_25px_60px_-35px_rgba(8,145,178,0.45),inset_1px_1px_2px_rgba(255,255,255,0.3),inset_-1px_-1px_3px_rgba(15,23,42,0.22)] backdrop-blur-[18px] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_35px_80px_-45px_rgba(8,145,178,0.55),inset_1px_1px_3px_rgba(255,255,255,0.38),inset_-1px_-2px_4px_rgba(15,23,42,0.28)] sm:p-8 lg:min-h-[70vh] lg:p-10"
     >
       <motion.div
         style={{ opacity: borderOpacity }}

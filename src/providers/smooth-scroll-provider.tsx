@@ -88,11 +88,11 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
 
     return {
       ...DEFAULT_LENIS_OPTIONS,
-      touchMultiplier: 1.05,
-      touchInertiaMultiplier: 0.95,
-      easing: (t) => 1 - Math.pow(1 - t, 1.7),
-      lerp: 0.22,
-      syncTouchLerp: 0.12,
+      syncTouch: false,
+      touchMultiplier: 1.2,
+      touchInertiaMultiplier: 1,
+      easing: (t) => 1 - Math.pow(1 - t, 1.6),
+      lerp: 0.3,
       wheelMultiplier: 1,
     }
   }, [hasCoarsePointer])
