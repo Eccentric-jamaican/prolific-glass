@@ -19,13 +19,13 @@ const DEFAULT_LENIS_OPTIONS: LenisOptions = {
   smoothWheel: true,
   syncTouch: true,
   touchMultiplier: 1,
-  touchInertiaMultiplier: 25,
-  duration: 0.75,
-  easing: (t) => 1 - Math.pow(1 - t, 2.4),
+  touchInertiaMultiplier: 1.12,
+  easing: (t) => 1 - Math.pow(1 - t, 2.35),
   gestureOrientation: "vertical",
   orientation: "vertical",
-  wheelMultiplier: 1,
-  lerp: 0.08,
+  wheelMultiplier: 0.92,
+  lerp: 0.16,
+  syncTouchLerp: 0.08,
 }
 
 export function SmoothScrollProvider({ children }: { children: ReactNode }) {
@@ -88,13 +88,12 @@ export function SmoothScrollProvider({ children }: { children: ReactNode }) {
 
     return {
       ...DEFAULT_LENIS_OPTIONS,
-      touchMultiplier: 0.9,
-      touchInertiaMultiplier: 12,
-      duration: 0.55,
-      easing: (t) => 1 - Math.pow(1 - t, 1.9),
-      lerp: 0.14,
-      syncTouch: true,
+      touchMultiplier: 1.05,
+      touchInertiaMultiplier: 0.95,
+      easing: (t) => 1 - Math.pow(1 - t, 1.7),
+      lerp: 0.22,
       syncTouchLerp: 0.12,
+      wheelMultiplier: 1,
     }
   }, [hasCoarsePointer])
 

@@ -91,7 +91,8 @@ export function Products({ className }: { className?: string }) {
             />
             <motion.div
               variants={trackPreset}
-              className="flex snap-x snap-mandatory snap-always gap-5 overflow-x-auto pb-4 pr-4 pl-1 scrollbar-hide sm:gap-6 sm:pl-2"
+              data-lenis-prevent
+              className="flex snap-x snap-mandatory snap-always gap-5 overflow-x-auto pb-4 pr-4 pl-1 scrollbar-hide touch-pan-x overscroll-x-contain sm:gap-6 sm:pl-2"
             >
               {products.map((product, index) => (
                 <ProductCard key={product.name} product={product} index={index} />

@@ -48,7 +48,8 @@ export function Features({ className }: { className?: string }) {
     <section
       id="features"
       aria-labelledby="features-heading"
-      className={cn("relative bg-slate-950 text-slate-50", className)}
+      data-lenis-prevent
+      className={cn("relative bg-slate-950 text-slate-50 touch-pan-y overscroll-y-contain", className)}
     >
       <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-slate-900 via-slate-950 to-black opacity-85 sm:opacity-90 lg:opacity-95" />
 
