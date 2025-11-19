@@ -1,0 +1,89 @@
+.navSurface {
+  --glass-highlight: rgba(255, 255, 255, 0.5);
+  --glass-frost: rgba(255, 255, 255, 0.12);
+  --glass-shadow: 0 18px 40px -28px rgba(4, 13, 33, 0.8);
+  --glass-sheen: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.4), transparent 42%),
+    radial-gradient(circle at 80% 0%, rgba(163, 214, 255, 0.45), transparent 46%);
+}
+
+.navLinks {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  isolation: isolate;
+}
+
+.navLink {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 9999px;
+  color: rgba(255, 255, 255, 0.75);
+  text-shadow: 0 6px 20px rgba(0, 0, 0, 0.16);
+  transition: color 200ms ease, transform 220ms ease, text-shadow 220ms ease, filter 220ms ease;
+  backdrop-filter: saturate(1.05);
+}
+
+.navLink::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.2), rgba(148, 227, 255, 0.16), rgba(216, 180, 254, 0.16));
+  opacity: 0;
+  filter: saturate(1.35);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.6), inset -1px -1px 0 rgba(12, 26, 57, 0.4);
+  transition: opacity 200ms ease, filter 220ms ease;
+  z-index: -1;
+}
+
+.navLink:hover,
+.navLink:focus-visible {
+  color: white;
+  text-shadow: 0 10px 26px rgba(0, 0, 0, 0.28);
+  transform: translateY(-1px);
+  filter: saturate(1.18);
+}
+
+.navLink:hover::before,
+.navLink:focus-visible::before {
+  opacity: 1;
+}
+
+.liquidHighlight {
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  height: 2.25rem;
+  border-radius: 9999px;
+  background: var(--glass-sheen),
+    linear-gradient(110deg, rgba(250, 250, 255, 0.35), rgba(125, 211, 252, 0.36), rgba(217, 180, 255, 0.24), rgba(99, 102, 241, 0.26));
+  border: 1px solid rgba(255, 255, 255, 0.46);
+  box-shadow: var(--glass-shadow), inset 1px 1px 0 rgba(255, 255, 255, 0.55), inset -1px -1px 0 rgba(14, 23, 42, 0.35);
+  filter: saturate(1.3);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 0;
+  transition: opacity 180ms ease, filter 240ms ease;
+}
+
+.liquidHighlight::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(0, 0, 0, 0.08));
+  mix-blend-mode: screen;
+  opacity: 0.8;
+}
+
+.navLinks:hover .liquidHighlight,
+.navLinks:focus-within .liquidHighlight {
+  opacity: 1;
+  filter: saturate(1.45);
+}

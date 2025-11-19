@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { motion } from "framer-motion"
 import { MenuIcon } from "lucide-react"
+import { type FocusEvent, useCallback, useRef, useState } from "react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -15,6 +16,7 @@ import {
 } from "@/components/ui/sheet"
 import { useMotionPreset } from "@/lib/motion-presets"
 import { cn } from "@/lib/utils"
+import styles from "./navbar.module.css"
 
 const links = [
   { label: "Features", href: "#features" },
@@ -25,6 +27,37 @@ const links = [
 
 export function Navbar({ className }: { className?: string }) {
   const fadeDown = useMotionPreset("fadeDown", { distance: -24, exitDistance: -16 })
+  const navRef = useRef<HTMLDivElement>(null)
+  const linkRefs = useRef<(HTMLAnchorElement | null)[]>([])
+  const [indicator, setIndicator] = useState({ x: 0, width: 0, visible: false })
+
+  const updateIndicator = useCallback((index: number) => {
+    const navEl = navRef.current
+    const target = linkRefs.current[index]
+
+    if (!navEl || !target) return
+
+    const navRect = navEl.getBoundingClientRect()
+    const targetRect = target.getBoundingClientRect()
+
+    setIndicator({
+      x: targetRect.left - navRect.left,
+      width: targetRect.width,
+      visible: true,
+    })
+  }, [])
+
+  const handleMouseLeave = useCallback(() => {
+    const activeElement = document.activeElement
+    if (activeElement && navRef.current?.contains(activeElement)) return
+    setIndicator((previous) => ({ ...previous, visible: false }))
+  }, [])
+
+  const handleBlurNav = useCallback((event: FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setIndicator((previous) => ({ ...previous, visible: false }))
+    }
+  }, [])
 
   return (
     <motion.header
@@ -48,12 +81,40 @@ export function Navbar({ className }: { className?: string }) {
               </span>
               Prolific Glass
             </Link>
-            <nav className="hidden items-center gap-6 text-sm font-medium text-white/70 md:flex">
-              {links.map((link) => (
+            <nav
+              ref={navRef}
+              className={cn(
+                "relative hidden items-center text-sm font-medium text-white/70 md:flex",
+                styles.navSurface,
+                styles.navLinks,
+              )}
+              onMouseLeave={handleMouseLeave}
+              onBlur={handleBlurNav}
+            >
+              <motion.div
+                aria-hidden="true"
+                className={styles.liquidHighlight}
+                initial={false}
+                animate={{
+                  x: indicator.x,
+                  width: indicator.width || 56,
+                  opacity: indicator.visible ? 1 : 0,
+                }}
+                transition={{ type: "spring", stiffness: 420, damping: 32, mass: 0.9 }}
+              />
+              {links.map((link, index) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="rounded-full px-3 py-1 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+                  ref={(node) => {
+                    linkRefs.current[index] = node
+                  }}
+                  onMouseEnter={() => updateIndicator(index)}
+                  onFocus={() => updateIndicator(index)}
+                  className={cn(
+                    "rounded-full px-3 py-1 transition-colors duration-200 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
+                    styles.navLink,
+                  )}
                 >
                   {link.label}
                 </Link>
