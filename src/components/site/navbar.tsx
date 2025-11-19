@@ -70,7 +70,12 @@ export function Navbar({ className }: { className?: string }) {
       )}
     >
       <div className="mx-auto flex w-full justify-center px-4 pt-4 sm:px-6">
-        <div className="relative flex w-full max-w-5xl items-center justify-between gap-3 overflow-hidden rounded-full border border-white/25 bg-white/10 px-5 py-3 text-white shadow-[0_30px_60px_-40px_rgba(15,23,42,0.85),inset_1px_1px_2px_rgba(255,255,255,0.3),inset_-1px_-1px_2px_rgba(15,23,42,0.45)] backdrop-blur-xl supports-backdrop-filter:bg-white/5">
+        <div
+          className={cn(
+            "relative flex w-full max-w-5xl items-center justify-between gap-3 overflow-hidden rounded-full border border-white/25 bg-white/10 px-5 py-3 text-white shadow-[0_30px_60px_-40px_rgba(15,23,42,0.85),inset_1px_1px_2px_rgba(255,255,255,0.3),inset_-1px_-1px_2px_rgba(15,23,42,0.45)] backdrop-blur-xl supports-backdrop-filter:bg-white/5",
+            styles.navShell,
+          )}
+        >
           <div className="relative flex w-full items-center justify-between gap-3">
             <Link
               href="#"
